@@ -2,10 +2,12 @@
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class BaseUrlProcessor {
 
   /**
-   * @var \Symfony\Component\HttpFoundation\RequestStack
+   * @var RequestStack
    */
   protected $requestStack;
 
@@ -22,7 +24,7 @@ class BaseUrlProcessor {
         return $record;
       }
 
-      $record['extra']['base_url'] = $this->requestStack->getCurrentRequest()->getBaseUrl();
+      $record['extra']['base_url'] = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
 
       return $record;
   }

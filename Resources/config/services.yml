@@ -1,7 +1,7 @@
 services:
-    monolog.processor.client_ip:
+    digipolis_syslog.processor.client_ip:
         class: DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor
-        arguments: [ @request_stack ]
+        arguments: [ "@request_stack" ]
         tags:
             - { name: monolog.processor }
 
@@ -10,14 +10,20 @@ services:
         tags:
             - { name: monolog.processor }
 
-    monolog.processor.timestamp:
+    digipolis_syslog.processor.timestamp:
         class: DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor
         tags:
             - { name: monolog.processor }
 
-    monolog.processor.base_url:
+    digipolis_syslog.processor.base_url:
         class: DigipolisGent\SyslogBundle\Monolog\Processor\BaseUrlProcessor
-        arguments: [ @request_stack ]
+        arguments: [ "@request_stack" ]
+        tags:
+            - { name: monolog.processor }
+
+    digipolis_syslog.processor.uid:
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor
+        arguments: [ "@security.token_storage" ]
         tags:
             - { name: monolog.processor }
 
@@ -25,4 +31,4 @@ services:
         class: Monolog\Formatter\LineFormatter
         arguments:
             # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
-            format: "%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.request_uri%%|%%extra.referer%%|||%%message%%"
+            format: "%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.url%%|%%extra.referrer%%|%%extra.uid%%||%%message%%"

@@ -2,10 +2,12 @@
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class ClientIpProcessor {
 
-  private $requestStack;
-  private $cachedClientIp = null;
+  protected $requestStack;
+  protected $cachedClientIp = null;
 
   public function __construct(RequestStack $requestStack) {
     $this->requestStack = $requestStack;

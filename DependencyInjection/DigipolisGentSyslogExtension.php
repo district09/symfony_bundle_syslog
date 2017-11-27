@@ -37,7 +37,7 @@ class DigipolisGentSyslogExtension extends Extension implements PrependExtension
                     'syslog_handler' => [
                         'type' => 'syslog',
                         'level' => 'debug',
-                        'facility' => LOG_LOCAL4,
+                        'facility' => defined('LOG_LOCAL4') ? LOG_LOCAL4 : 160,
                         'formatter' => 'monolog.formatter.kibana'
                     ],
                 ],
