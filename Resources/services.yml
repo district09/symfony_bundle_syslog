@@ -1,0 +1,28 @@
+services:
+    monolog.processor.client_ip:
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor
+        arguments: [ @request_stack ]
+        tags:
+            - { name: monolog.processor }
+
+    monolog.processor.web:
+        class: Monolog\Processor\WebProcessor
+        tags:
+            - { name: monolog.processor }
+
+    monolog.processor.timestamp:
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor
+        tags:
+            - { name: monolog.processor }
+
+    monolog.processor.base_url:
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\BaseUrlProcessor
+        arguments: [ @request_stack ]
+        tags:
+            - { name: monolog.processor }
+
+    monolog.formatter.kibana:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
+            format: "%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.request_uri%%|%%extra.referer%%|||%%message%%"

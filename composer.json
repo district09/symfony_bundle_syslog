@@ -1,0 +1,25 @@
+{
+    "name": "digipolisgent/syslog-bundle",
+    "description": "Configures the symfony (monolog) syslog logger to output in a format that kibana can parse.",
+    "type": "symfony-bundle",
+    "require": {
+        "symfony/dependency-injection": "^3.3",
+        "symfony/config": "^3.3",
+        "symfony/yaml": "^3.3",
+        "symfony/http-kernel": "^3.3",
+        "symfony/monolog-bundle": "^3.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jelle Sebreghts",
+            "email": "sebreghts.jelle@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "DigipolisGent\\SyslogBundle\\": ""
+        }
+    }
+}
