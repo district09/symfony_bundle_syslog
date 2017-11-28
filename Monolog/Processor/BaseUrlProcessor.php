@@ -38,7 +38,7 @@ class BaseUrlProcessor
 
         // Ensure we have a request (maybe we're in a console command).
         if (!$request = $this->requestStack->getCurrentRequest()) {
-          return $record;
+            return $record;
         }
 
         $record['extra']['base_url'] = $request->getSchemeAndHttpHost();
