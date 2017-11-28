@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class TimestampProcessorTest extends TestCase
+class UidProcessorTest extends TestCase
 {
 
     public function testInvokeNoToken()
