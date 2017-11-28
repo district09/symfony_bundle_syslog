@@ -41,7 +41,7 @@ class UidProcessor
             return $record;
         }
 
-        if (!is_object($user = $token->getUser())) {
+        if (!$user = $token->getUser()) {
             // e.g. anonymous authentication
             return $record;
         }
