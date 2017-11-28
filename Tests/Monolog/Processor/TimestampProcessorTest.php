@@ -2,11 +2,9 @@
 
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
-use DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor;
+use DateTime;
 use DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class TimestampProcessorTest extends TestCase
 {
@@ -27,7 +25,7 @@ class TimestampProcessorTest extends TestCase
 
     public function testInvoke()
     {
-        $dateTime = new \DateTime();
+        $dateTime = new DateTime();
         $id = uniqid();
         $processor = new TimestampProcessor();
         $record = $processor(['id' => $id, 'datetime' => $dateTime]);
