@@ -7,7 +7,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class BaseUrlProcessorTest extends TestCase {
+class BaseUrlProcessorTest extends TestCase
+{
 
     public function testInvokeNoRequest()
     {
