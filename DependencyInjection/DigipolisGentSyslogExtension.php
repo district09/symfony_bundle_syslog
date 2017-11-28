@@ -16,7 +16,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  * @see http://symfony.com/doc/current/cookbook/bundles/extension.html
  * @codeCoverageIgnore
  */
-class DigipolisGentSyslogExtension extends Extension implements PrependExtensionInterface
+class DigipolisGentSyslogExtension extends Extension implements
+    PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -26,11 +27,18 @@ class DigipolisGentSyslogExtension extends Extension implements PrependExtension
         $configuration = new Configuration();
         $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new Loader\YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
         $loader->load('services.yml');
     }
 
-    public function prepend(ContainerBuilder $container) {
+    /**
+     * {@inheritdoc}
+     */
+    public function prepend(ContainerBuilder $container)
+    {
         if ($container->hasExtension('monolog')) {
             $config = [
                 'handlers' => [
@@ -38,12 +46,11 @@ class DigipolisGentSyslogExtension extends Extension implements PrependExtension
                         'type' => 'syslog',
                         'level' => 'debug',
                         'facility' => defined('LOG_LOCAL4') ? LOG_LOCAL4 : 160,
-                        'formatter' => 'monolog.formatter.kibana'
+                        'formatter' => 'monolog.formatter.kibana',
                     ],
                 ],
             ];
             $container->prependExtensionConfig('monolog', $config);
         }
     }
-
 }

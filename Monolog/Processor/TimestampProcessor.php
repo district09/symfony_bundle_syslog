@@ -2,14 +2,28 @@
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
-class TimestampProcessor {
+/**
+ * Processor that adds a timestamp to a log record.
+ */
+class TimestampProcessor
+{
 
-  public function __invoke(array $record) {
-      $record['timestamp'] = time();
-      if (isset($record['datetime']) && $record['datetime'] instanceof \DateTime) {
-          $record['timestamp'] = $record['datetime']->getTimestamp();
-      }
-      return $record;
-  }
+    /**
+     * Adds the timestamp to the record.
+     *
+     * @param array $record
+     *
+     * @return array
+     */
+    public function __invoke(array $record)
+    {
+        $record['timestamp'] = time();
+        if (isset($record['datetime'])
+            && $record['datetime'] instanceof \DateTime
+        ) {
+            $record['timestamp'] = $record['datetime']->getTimestamp();
+        }
 
+        return $record;
+    }
 }

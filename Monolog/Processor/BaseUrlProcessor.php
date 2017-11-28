@@ -4,29 +4,45 @@ namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class BaseUrlProcessor {
+/**
+ * Processor that adds a base_url to the extra key of a log record.
+ */
+class BaseUrlProcessor
+{
 
-  /**
-   * @var RequestStack
-   */
-  protected $requestStack;
+    /**
+     * @var RequestStack
+     */
+    protected $requestStack;
 
-  public function __construct(RequestStack $requestStack) {
-    $this->requestStack = $requestStack;
-  }
+    /**
+     * Creates a new BaseUrlProcessor.
+     *
+     * @param RequestStack $requestStack
+     */
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
 
-  public function __invoke(array $record) {
-      // client_ip will hold the request's actual origin address
-      $record['extra']['base_url'] = '';
+    /**
+     * Adds the base_url to the record's extra key.
+     *
+     * @param array $record
+     *
+     * @return array
+     */
+    public function __invoke(array $record)
+    {
+        $record['extra']['base_url'] = '';
 
-      // Ensure we have a request (maybe we're in a console command)
-      if (!$request = $this->requestStack->getCurrentRequest()) {
+        // Ensure we have a request (maybe we're in a console command).
+        if (!$request = $this->requestStack->getCurrentRequest()) {
+            return $record;
+        }
+
+        $record['extra']['base_url'] = $request->getSchemeAndHttpHost();
+
         return $record;
-      }
-
-      $record['extra']['base_url'] = $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost();
-
-      return $record;
-  }
-
+    }
 }
