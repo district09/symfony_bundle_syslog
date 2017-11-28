@@ -25,7 +25,8 @@ class ClientIpProcessor
      *
      * @param RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack) {
+    public function __construct(RequestStack $requestStack)
+    {
         $this->requestStack = $requestStack;
     }
 
@@ -36,9 +37,12 @@ class ClientIpProcessor
      *
      * @return array
      */
-    public function __invoke(array $record) {
-        // client_ip will hold the request's actual origin address
-        $record['extra']['client_ip'] = $this->cachedClientIp ? $this->cachedClientIp : 'unavailable';
+    public function __invoke(array $record)
+    {
+        // Yhe client_ip will hold the request's actual origin address.
+        $record['extra']['client_ip'] = $this->cachedClientIp
+            ? $this->cachedClientIp
+            : 'unavailable';
 
         // Return if we already know client's IP
         if ($record['extra']['client_ip'] !== 'unavailable') {

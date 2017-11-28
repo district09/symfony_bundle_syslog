@@ -20,7 +20,8 @@ class UidProcessor
    *
    * @param TokenStorageInterface $tokenStorage
    */
-  public function __construct(TokenStorageInterface $tokenStorage) {
+  public function __construct(TokenStorageInterface $tokenStorage)
+  {
       $this->tokenStorage = $tokenStorage;
   }
 
@@ -31,7 +32,8 @@ class UidProcessor
      *
      * @return array
      */
-  public function __invoke(array $record) {
+  public function __invoke(array $record)
+  {
       // client_ip will hold the request's actual origin address
       $record['extra']['uid'] = 0;
 
@@ -44,7 +46,12 @@ class UidProcessor
           return $record;
       }
 
-      $record['extra']['uid'] = is_scalar($user) ? $user : (method_exists($user, 'getId') ? $user->getId() : $user->getUsername());
+      $record['extra']['uid'] = is_scalar($user)
+          ? $user
+          : (method_exists($user, 'getId')
+              ? $user->getId()
+              : $user->getUsername()
+          );
 
       return $record;
   }

@@ -15,11 +15,16 @@ class TimestampProcessor
      *
      * @return array
      */
-    public function __invoke(array $record) {
+    public function __invoke(array $record)
+    {
         $record['timestamp'] = time();
-        if (isset($record['datetime']) && $record['datetime'] instanceof \DateTime) {
+        if (
+            isset($record['datetime'])
+            && $record['datetime'] instanceof \DateTime
+        ) {
             $record['timestamp'] = $record['datetime']->getTimestamp();
         }
+
         return $record;
     }
 }
