@@ -2,7 +2,7 @@ engines:
   phpcodesniffer:
     enabled: true
     config:
-      standard: "PSR1,PSR2,Symfony"
+      standard: "PSR1,PSR2,Symfony2"
   phpmd:
     enabled: true
   duplication:
