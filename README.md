@@ -11,4 +11,5 @@
 [![PHP 7 ready](https://php7ready.timesplinter.ch/digipolisgent/symfony_bundle_syslog/develop/badge.svg)](https://travis-ci.org/digipolisgent/symfony_bundle_syslog)
 
 Configures the symfony (monolog) syslog logger to output in a format that kibana
-can parse.
+can parse. Add the digipolis_syslog_identity parameter to your
+```parameters.yml``` file to configure the syslog identity.

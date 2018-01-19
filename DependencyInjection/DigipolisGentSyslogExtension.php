@@ -45,6 +45,8 @@ class DigipolisGentSyslogExtension extends Extension implements
                         'type' => 'syslog',
                         'level' => 'debug',
                         'facility' => defined('LOG_LOCAL4') ? LOG_LOCAL4 : 160,
+                        'ident' => $container->getParameter('digipolis_syslog_identity') ?: 'no_syslog_identity_set',
+                        'logopts' => LOG_ODELAY,
                         'formatter' => 'monolog.formatter.kibana',
                     ],
                 ],
