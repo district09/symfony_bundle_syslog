@@ -27,6 +27,11 @@ services:
         tags:
             - { name: monolog.processor }
 
+    digipolis_syslog.processor.lowercase_level:
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor
+        tags:
+            - { name: monolog.processor }
+
     monolog.formatter.kibana:
         class: Monolog\Formatter\LineFormatter
         arguments:
