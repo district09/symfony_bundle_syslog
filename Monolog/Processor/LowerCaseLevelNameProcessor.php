@@ -3,13 +3,13 @@
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 /**
- * Processor that adds the lowercase level name to a log record.
+ * Processor that transforms the level name to lowercase in a log record.
  */
 class LowerCaseLevelNameProcessor
 {
 
     /**
-     * Adds the lowercase level name to the record.
+     * Transforms the level name to lowercase in the given record.
      *
      * @param array $record
      *
