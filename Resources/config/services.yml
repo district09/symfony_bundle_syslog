@@ -28,7 +28,7 @@ services:
             - { name: monolog.processor }
 
     digipolis_syslog.processor.lowercase_level:
-        class: DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor
+        class: DigipolisGent\SyslogBundle\Monolog\Processor\LowerCaseLevelNameProcessor
         tags:
             - { name: monolog.processor }
 
