@@ -34,6 +34,5 @@ services:
 
     monolog.formatter.kibana:
         class: Monolog\Formatter\LineFormatter
-        arguments:
-            # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
-            format: "%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%||%%message%%"
+        # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
+        arguments: ["%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%||%%message%%"]
