@@ -16,13 +16,19 @@ class BaseUrlProcessor
     protected $requestStack;
 
     /**
+     * @var string
+     */
+    protected $defaultBaseUrl;
+
+    /**
      * Creates a new BaseUrlProcessor.
      *
      * @param RequestStack $requestStack
      */
-    public function __construct(RequestStack $requestStack)
+    public function __construct(RequestStack $requestStack, $defaultBaseUrl = null)
     {
         $this->requestStack = $requestStack;
+        $this->defaultBaseUrl = $defaultBaseUrl;
     }
 
     /**
@@ -34,10 +40,12 @@ class BaseUrlProcessor
      */
     public function __invoke(array $record)
     {
-        $record['extra']['base_url'] = '';
+        $record['extra']['base_url'] = $this->defaultBaseUrl;
 
         // Ensure we have a request (maybe we're in a console command).
         if (!$request = $this->requestStack->getCurrentRequest()) {
+            // No current request. Set the referrer to the base url.
+            $record['extra']['referrer'] = $this->defaultBaseUrl;
             return $record;
         }
 
