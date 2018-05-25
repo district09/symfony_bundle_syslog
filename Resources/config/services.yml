@@ -17,7 +17,7 @@ services:
 
     digipolis_syslog.processor.base_url:
         class: DigipolisGent\SyslogBundle\Monolog\Processor\BaseUrlProcessor
-        arguments: [ "@request_stack" ]
+        arguments: [ "@request_stack", "%digipolis_syslog_default_base_url%" ]
         tags:
             - { name: monolog.processor }
 
@@ -35,4 +35,4 @@ services:
     monolog.formatter.kibana:
         class: Monolog\Formatter\LineFormatter
         # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
-        arguments: ["%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%||%%message%%"]
+        arguments: ["%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%"]
