@@ -43,7 +43,7 @@ class DigipolisGentSyslogExtension extends Extension implements
                 'handlers' => [
                     'syslog_handler' => [
                         'type' => 'syslog',
-                        'level' => 'debug',
+                        'level' => $container->getParameter("kernel.environment") === 'prod' ? 'notice' : 'debug',
                         'facility' => defined('LOG_LOCAL4') ? LOG_LOCAL4 : 160,
                         'ident' => $container->getParameter('digipolis_syslog_identity') ?: 'no_syslog_identity_set',
                         'logopts' => LOG_ODELAY,
