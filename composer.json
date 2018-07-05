@@ -3,12 +3,12 @@
     "description": "Configures the symfony (monolog) syslog logger to output in a format that kibana can parse.",
     "type": "symfony-bundle",
     "require": {
-        "symfony/dependency-injection": "^2.8|^3.0",
-        "symfony/config": "^2.8|^3.0",
-        "symfony/yaml": "^2.8|^3.0",
-        "symfony/http-kernel": "^2.8|^3.0",
-        "symfony/monolog-bundle": "^2.8|^3.0",
-        "symfony/security": "^2.8|^3.0"
+        "symfony/dependency-injection": "^2.8|^3.0|^4.0",
+        "symfony/config": "^2.8|^3.0|^4.0",
+        "symfony/yaml": "^2.8|^3.0|^4.0",
+        "symfony/http-kernel": "^2.8|^3.0|^4.0",
+        "symfony/monolog-bundle": "^2.8|^3.0|^4.0",
+        "symfony/security": "^2.8|^3.0|^4.0"
     },
     "license": "MIT",
     "authors": [
