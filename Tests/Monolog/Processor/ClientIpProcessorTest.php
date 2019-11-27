@@ -17,7 +17,7 @@ class ClientIpProcessorTest extends TestCase
         $processor = new ClientIpProcessor($requestStack);
         $id = uniqid();
         $record = $processor(['id' => $id]);
-        $this->assertEquals($record['extra']['client_ip'], 'unavailable');
+        $this->assertEquals($record['extra']['client_ip'], '127.0.0.1');
         $this->assertEquals($record['id'], $id);
     }
 
