@@ -51,6 +51,8 @@ class ClientIpProcessor
 
         // Ensure we have a request (maybe we're in a console command)
         if (!$request = $this->requestStack->getCurrentRequest()) {
+            $this->cachedClientIp = '127.0.0.1';
+            $record['extra']['client_ip'] = $this->cachedClientIp;
             return $record;
         }
 
