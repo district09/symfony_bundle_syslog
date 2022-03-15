@@ -8,7 +8,7 @@
         "symfony/yaml": "^3.4|^4.3|^5.4",
         "symfony/http-kernel": "^3.4|^4.3|^5.4",
         "symfony/monolog-bundle": "^3.4|^4.3|^5.4",
-        "symfony/security": "^3.4|^4.3|^5.4"
+        "symfony/security-core": "^5.4"
     },
     "license": "MIT",
     "authors": [
