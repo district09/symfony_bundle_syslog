@@ -17,8 +17,7 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('digipolis_syslog');
+        $treeBuilder = new TreeBuilder('digipolis_syslog');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
