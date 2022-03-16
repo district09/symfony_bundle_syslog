@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1647423233">
+  <project timestamp="1647423233">
+    <file name="/home/jelle/websites/symfony_bundle_syslog/DependencyInjection/Configuration.php">
+      <class name="DigipolisGent\SyslogBundle\DependencyInjection\Configuration" namespace="global">
+        <metrics complexity="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </class>
+      <metrics loc="29" ncloc="18" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/DependencyInjection/DigipolisGentSyslogExtension.php">
+      <class name="DigipolisGent\SyslogBundle\DependencyInjection\DigipolisGentSyslogExtension" namespace="global">
+        <metrics complexity="6" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </class>
+      <metrics loc="58" ncloc="46" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/DigipolisGentSyslogBundle.php">
+      <class name="DigipolisGent\SyslogBundle\DigipolisGentSyslogBundle" namespace="global">
+        <metrics complexity="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </class>
+      <metrics loc="20" ncloc="14" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/Monolog/Processor/BaseUrlProcessor.php">
+      <class name="DigipolisGent\SyslogBundle\Monolog\Processor\BaseUrlProcessor" namespace="global">
+        <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
+      </class>
+      <line num="28" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="30" type="stmt" count="2"/>
+      <line num="31" type="stmt" count="2"/>
+      <line num="41" type="method" name="__invoke" visibility="public" complexity="2" crap="2" count="2"/>
+      <line num="43" type="stmt" count="2"/>
+      <line num="46" type="stmt" count="2"/>
+      <line num="48" type="stmt" count="1"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="52" type="stmt" count="1"/>
+      <line num="54" type="stmt" count="1"/>
+      <metrics loc="57" ncloc="34" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/Monolog/Processor/ClientIpProcessor.php">
+      <class name="DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor" namespace="global">
+        <metrics complexity="5" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="15" coveredelements="15"/>
+      </class>
+      <line num="28" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="30" type="stmt" count="2"/>
+      <line num="40" type="method" name="__invoke" visibility="public" complexity="4" crap="4" count="2"/>
+      <line num="43" type="stmt" count="2"/>
+      <line num="44" type="stmt" count="1"/>
+      <line num="45" type="stmt" count="2"/>
+      <line num="48" type="stmt" count="2"/>
+      <line num="49" type="stmt" count="1"/>
+      <line num="53" type="stmt" count="2"/>
+      <line num="54" type="stmt" count="1"/>
+      <line num="55" type="stmt" count="1"/>
+      <line num="56" type="stmt" count="1"/>
+      <line num="60" type="stmt" count="1"/>
+      <line num="61" type="stmt" count="1"/>
+      <line num="63" type="stmt" count="1"/>
+      <metrics loc="66" ncloc="41" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="15" coveredelements="15"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/Monolog/Processor/LowerCaseLevelNameProcessor.php">
+      <class name="DigipolisGent\SyslogBundle\Monolog\Processor\LowerCaseLevelNameProcessor" namespace="global">
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
+      </class>
+      <line num="18" type="method" name="__invoke" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="20" type="stmt" count="1"/>
+      <line num="22" type="stmt" count="1"/>
+      <metrics loc="25" ncloc="15" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/Monolog/Processor/TimestampProcessor.php">
+      <class name="DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor" namespace="global">
+        <metrics complexity="3" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="6" coveredelements="6"/>
+      </class>
+      <line num="18" type="method" name="__invoke" visibility="public" complexity="3" crap="3" count="2"/>
+      <line num="20" type="stmt" count="2"/>
+      <line num="21" type="stmt" count="2"/>
+      <line num="22" type="stmt" count="2"/>
+      <line num="24" type="stmt" count="1"/>
+      <line num="27" type="stmt" count="2"/>
+      <metrics loc="30" ncloc="20" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="6" coveredelements="6"/>
+    </file>
+    <file name="/home/jelle/websites/symfony_bundle_syslog/Monolog/Processor/UidProcessor.php">
+      <class name="DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor" namespace="global">
+        <metrics complexity="6" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+      </class>
+      <line num="23" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="5"/>
+      <line num="25" type="stmt" count="5"/>
+      <line num="35" type="method" name="__invoke" visibility="public" complexity="5" crap="5" count="5"/>
+      <line num="38" type="stmt" count="5"/>
+      <line num="40" type="stmt" count="5"/>
+      <line num="41" type="stmt" count="1"/>
+      <line num="44" type="stmt" count="4"/>
+      <line num="46" type="stmt" count="1"/>
+      <line num="49" type="stmt" count="3"/>
+      <line num="50" type="stmt" count="1"/>
+      <line num="51" type="stmt" count="2"/>
+      <line num="52" type="stmt" count="1"/>
+      <line num="53" type="stmt" count="2"/>
+      <line num="56" type="stmt" count="3"/>
+      <metrics loc="59" ncloc="39" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="14" coveredelements="14"/>
+    </file>
+    <metrics files="8" loc="344" ncloc="227" classes="5" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="40" elements="48" coveredelements="48"/>
+  </project>
+</coverage>
