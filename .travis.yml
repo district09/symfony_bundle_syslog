@@ -3,8 +3,8 @@ env:
     - CC_TEST_REPORTER_ID=0b4b1fe2a70315264df7135099c3cb2fdef5a580d4a5d6c85064b6b13e1ca000
 language: php
 php:
-  - 7.2
   - 7.3
+  - 7.4
 before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
