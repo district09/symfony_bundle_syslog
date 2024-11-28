@@ -6,62 +6,66 @@ use DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class UidProcessorTest extends TestCase
+final class UidProcessorTest extends TestCase
 {
-
-    public function testInvokeNoToken()
+    public function testInvokeNoToken(): void
     {
-        $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->disableOriginalConstructor()->getMock();
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage->expects($this->once())->method('getToken')->willReturn(null);
+
         $processor = new UidProcessor($tokenStorage);
-        $id = uniqid();
+        $id = uniqid('', true);
         $record = $processor(['id' => $id]);
         $this->assertEquals($record['id'], $id);
         $this->assertEquals($record['extra']['uid'], 0);
     }
 
-    public function testInvokeNoUser()
+    public function testInvokeNoUser(): void
     {
         $token = $this->getMockBuilder(TokenInterface::class)->disableOriginalConstructor()->getMock();
         $token->expects($this->once())->method('getUser')->willReturn(null);
         $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->disableOriginalConstructor()->getMock();
         $tokenStorage->expects($this->once())->method('getToken')->willReturn($token);
+
         $processor = new UidProcessor($tokenStorage);
-        $id = uniqid();
+        $id = uniqid('', true);
         $record = $processor(['id' => $id]);
         $this->assertEquals($record['id'], $id);
         $this->assertEquals($record['extra']['uid'], 0);
     }
 
-    public function testInvokeUserName()
+    public function testInvokeUserIdentifier(): void
     {
-        $userName = uniqid();
-        $token = $this->getMockBuilder(TokenInterface::class)->disableOriginalConstructor()->getMock();
-        $token->expects($this->once())->method('getUser')->willReturn($userName);
-        $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->disableOriginalConstructor()->getMock();
+        $userName = uniqid('', true);
+        $token = $this->createMock(TokenInterface::class);
+        $token->expects($this->once())->method('getUserIdentifier')->willReturn($userName);
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage->expects($this->once())->method('getToken')->willReturn($token);
+
         $processor = new UidProcessor($tokenStorage);
-        $id = uniqid();
+        $id = uniqid('', true);
         $record = $processor(['id' => $id]);
-        $this->assertEquals($record['id'], $id);
-        $this->assertEquals($record['extra']['uid'], $userName);
+        self::assertEquals($record['id'], $id);
+        self::assertEquals($record['extra']['uid'], $userName);
     }
 
     public function testInvokeUserNoGetId()
     {
         $userName = uniqid();
-        $user = $this->getMockBuilder(\stdClass::class)->setMethods(['getUsername'])->getMock();
+        $user = $this->createMock(UserInterface::class);
         $user->expects($this->once())->method('getUsername')->willReturn($userName);
-        $token = $this->getMockBuilder(TokenInterface::class)->disableOriginalConstructor()->getMock();
+        $token = $this->createMock(TokenInterface::class);
         $token->expects($this->once())->method('getUser')->willReturn($user);
-        $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->disableOriginalConstructor()->getMock();
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage->expects($this->once())->method('getToken')->willReturn($token);
+
         $processor = new UidProcessor($tokenStorage);
-        $id = uniqid();
+        $id = uniqid('', true);
         $record = $processor(['id' => $id]);
-        $this->assertEquals($record['id'], $id);
-        $this->assertEquals($record['extra']['uid'], $userName);
+        self::assertEquals($record['id'], $id);
+        self::assertEquals($record['extra']['uid'], $userName);
     }
 
     public function testInvokeUserGetId()
@@ -73,8 +77,9 @@ class UidProcessorTest extends TestCase
         $token->expects($this->once())->method('getUser')->willReturn($user);
         $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->disableOriginalConstructor()->getMock();
         $tokenStorage->expects($this->once())->method('getToken')->willReturn($token);
+
         $processor = new UidProcessor($tokenStorage);
-        $id = uniqid();
+        $id = uniqid('', true);
         $record = $processor(['id' => $id]);
         $this->assertEquals($record['id'], $id);
         $this->assertEquals($record['extra']['uid'], $userId);
