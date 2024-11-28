@@ -3,7 +3,6 @@
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -30,46 +29,35 @@ final class UidProcessor
      */
     public function __invoke(array $record): array
     {
-        // client_ip will hold the request's actual origin address.
-        $record['extra']['uid'] = 0;
-
-        $token = $this->tokenStorage->getToken();
-        if ($token === null) {
-            return $record;
-        }
-
-        $user = $token->getUser();
+        $user = $this->tokenStorage->getToken()?->getUser();
         if (!$user) {
+            $record['extra']['uid'] = 0;
             return $record;
         }
 
-        $record['extra']['uid'] = $this->getUserIdentifier($token, $user);
-
+        $record['extra']['uid'] = $this->getUserIdentifier($user);
         return $record;
     }
 
     /**
-     * Extract the user ID from user.
+     * Extract the user ID or identifier from user.
      *
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
+     * Try of one of the id related methods with fallback to the user
+     * identifier.
+     *
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @return string
      */
-    private function getUserIdentifier(TokenInterface $token, UserInterface $user): string
+    private function getUserIdentifier(UserInterface $user): string
     {
-        if (\method_exists($user, 'id')) {
-            return (string) $user->id();
+        $methods = ['getId', 'recordId', 'id'];
+        foreach ($methods as $method) {
+            if (\method_exists($user, $method)) {
+                return (string) $user->{$method}();
+            }
         }
 
-        if (\method_exists($user, 'getId')) {
-            return (string) $user->getId();
-        }
-
-        if (\method_exists($user, 'getRecordId')) {
-            return (string) $user->getRecordId();
-        }
-
-        return $token->getUserIdentifier();
+        return $user->getUserIdentifier();
     }
 }
