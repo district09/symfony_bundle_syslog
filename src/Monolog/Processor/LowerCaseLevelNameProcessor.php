@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 /**
  * Processor that transforms the level name to lowercase in a log record.
  */
-class LowerCaseLevelNameProcessor
+final class LowerCaseLevelNameProcessor
 {
-
     /**
      * Transforms the level name to lowercase in the given record.
      *

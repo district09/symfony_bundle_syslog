@@ -1,35 +1,74 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DateTime;
 use DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor;
 use PHPUnit\Framework\TestCase;
 
-class TimestampProcessorTest extends TestCase
+/**
+ * @covers \DigipolisGent\SyslogBundle\Monolog\Processor\TimestampProcessor
+ *
+ * @group DigipolisGentSyslogBundle
+ */
+final class TimestampProcessorTest extends TestCase
 {
-
-    public function testInvokeNoDatetime()
+    /**
+     * Fallback to system time when there is no datetime in record data.
+     *
+     * @test
+     */
+    public function itUsesSystemTimeWhenNoDateTimeInRecord(): void
     {
-        $processor = new TimestampProcessor();
-        $id = uniqid();
         $before = time();
-        sleep(1);
+
+        $id = uniqid('', true);
+        $processor = new TimestampProcessor();
         $record = $processor(['id' => $id]);
-        sleep(1);
+
         $after = time();
-        $this->assertGreaterThan($before, $record['timestamp']);
-        $this->assertLessThan($after, $record['timestamp']);
-        $this->assertEquals($record['id'], $id);
+
+        self::assertEquals($id, $record['id']);
+        self::assertGreaterThanOrEqual($before, $record['timestamp']);
+        self::assertLessThanOrEqual($after, $record['timestamp']);
     }
 
-    public function testInvoke()
+    /**
+     * Fallback to system time when there is no datetime value in record data.
+     *
+     * @test
+     */
+    public function itUsesSystemTimeWhenNoDateTimeValueInRecord(): void
+    {
+        $before = time();
+
+        $id = uniqid('', true);
+        $processor = new TimestampProcessor();
+        $record = $processor(['id' => $id, 'datetime' => '']);
+
+        $after = time();
+
+        self::assertEquals($id, $record['id']);
+        self::assertGreaterThanOrEqual($before, $record['timestamp']);
+        self::assertLessThanOrEqual($after, $record['timestamp']);
+    }
+
+    /**
+     * The datetime value in record is used when available.
+     *
+     * @test
+     */
+    public function itUsesDateTimeFromRecordWhenAvailable(): void
     {
         $dateTime = new DateTime();
-        $id = uniqid();
+        $id = uniqid('', true);
+
         $processor = new TimestampProcessor();
         $record = $processor(['id' => $id, 'datetime' => $dateTime]);
-        $this->assertEquals($record['timestamp'], $dateTime->getTimestamp());
-        $this->assertEquals($record['id'], $id);
+
+        self::assertEquals($dateTime->getTimestamp(), $record['timestamp']);
+        self::assertEquals($id, $record['id']);
     }
 }

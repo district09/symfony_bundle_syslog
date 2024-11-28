@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -10,7 +12,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  *
  * @codeCoverageIgnore
  */
-class Configuration implements ConfigurationInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
      * {@inheritdoc}

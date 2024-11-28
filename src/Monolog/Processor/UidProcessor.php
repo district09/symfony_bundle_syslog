@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -8,15 +10,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Processor that adds an uid to the extra key of a log record.
  */
-final class UidProcessor
+final readonly class UidProcessor
 {
-    /**
-     * Creates a new UidProcessor.
-     *
-     * @param TokenStorageInterface $tokenStorage
-     */
     public function __construct(
-        private TokenStorageInterface $tokenStorage
+        private TokenStorageInterface $tokenStorage,
     ) {
     }
 

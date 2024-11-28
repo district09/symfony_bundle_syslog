@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
 /**
  * Processor that adds a timestamp to a log record.
  */
-class TimestampProcessor
+final class TimestampProcessor
 {
-
     /**
      * Adds the timestamp to the record.
      *
@@ -15,14 +16,11 @@ class TimestampProcessor
      *
      * @return array
      */
-    public function __invoke(array $record)
+    public function __invoke(array $record): array
     {
-        $record['timestamp'] = time();
-        if (isset($record['datetime'])
-            && $record['datetime'] instanceof \DateTime
-        ) {
-            $record['timestamp'] = $record['datetime']->getTimestamp();
-        }
+        $record['timestamp'] = (isset($record['datetime']) && $record['datetime'] instanceof \DateTime)
+            ? $record['datetime']->getTimestamp()
+            : time();
 
         return $record;
     }

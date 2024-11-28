@@ -50,3 +50,17 @@ return [
     DigipolisGent\SyslogBundle\DigipolisGentSyslogBundle::class => ['all' => true],,
 ];
 ```
+
+### Configuration (with or without Symfony Flex)
+
+Add a parameter to `config/services.yaml` to set the identifier for the site.
+This is used to identify logging of different websites.
+
+Replace `site.name` by the actual identifier:
+
+```yamp
+# config/services.yaml
+
+parameters:
+    digipolis_syslog_identity: 'site.name'
+```

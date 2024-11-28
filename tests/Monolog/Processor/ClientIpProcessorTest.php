@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor;
@@ -7,37 +9,76 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class ClientIpProcessorTest extends TestCase
+/**
+ * @covers \DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor
+ *
+ * @group DigipolisGentSyslogBundle
+ */
+final class ClientIpProcessorTest extends TestCase
 {
-
-    public function testInvokeNoRequest()
+    /**
+     * Fallback to localhost (127.0.0.1) when there is no request.
+     *
+     * @test
+     */
+    public function itUsesLocalhostWhenThereIsNoRequest(): void
     {
-        $requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
+        $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
+
+        $id = uniqid('', true);
         $processor = new ClientIpProcessor($requestStack);
-        $id = uniqid();
         $record = $processor(['id' => $id]);
-        $this->assertEquals($record['extra']['client_ip'], '127.0.0.1');
-        $this->assertEquals($record['id'], $id);
+
+        self::assertEquals('127.0.0.1', $record['extra']['client_ip']);
+        self::assertEquals($id, $record['id']);
     }
 
-    public function testInvoke()
+    /**
+     * IP from request is added to the log data.
+     *
+     * The extracted IP is cached in memory.
+     *
+     * @test
+     */
+    public function itUsesIpFromRequestInLogData(): void
     {
-        $ip = uniqid();
-        $request = $this->getMockBuilder(Request::class)->disableOriginalConstructor()->getMock();
+        $ip = '168.0.0.1';
+        $request = $this->createMock(Request::class);
         $request->expects($this->once())->method('getClientIp')->willReturn($ip);
-        $requestStack = $this->getMockBuilder(RequestStack::class)->disableOriginalConstructor()->getMock();
+        $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $id = uniqid('', true);
         $processor = new ClientIpProcessor($requestStack);
-        $id = uniqid();
+
         $record = $processor(['id' => $id]);
-        $this->assertEquals($record['extra']['client_ip'], $ip);
-        $this->assertEquals($record['id'], $id);
+        self::assertEquals($id, $record['id']);
+        self::assertEquals($ip, $record['extra']['client_ip']);
 
         // The mocks expect their methods to be called once. Invoking this
         // processor twice should use its cached ip.
         $record2 = $processor(['id' => $id]);
-        $this->assertEquals($record2['extra']['client_ip'], $ip);
-        $this->assertEquals($record2['id'], $id);
+        self::assertEquals($id, $record2['id']);
+        self::assertEquals($ip, $record2['extra']['client_ip']);
+    }
+
+    /**
+     * No IP when there is none in the request.
+     *
+     * @test
+     */
+    public function itAddsEmptyStringWhenRequestHasNoIp(): void
+    {
+        $request = $this->createMock(Request::class);
+        $request->expects($this->once())->method('getClientIp')->willReturn(null);
+        $requestStack = $this->createMock(RequestStack::class);
+        $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
+
+        $id = uniqid('', true);
+        $processor = new ClientIpProcessor($requestStack);
+
+        $record = $processor(['id' => $id]);
+        self::assertEquals('', $record['extra']['client_ip']);
     }
 }

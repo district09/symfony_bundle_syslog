@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor;
