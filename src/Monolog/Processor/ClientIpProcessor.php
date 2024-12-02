@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Monolog\LogRecord;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -26,14 +27,14 @@ final class ClientIpProcessor
     /**
      * Adds the client_ip to the record's extra key.
      *
-     * @param array $record
+     * @param \Monolog\LogRecord $record
      *
-     * @return array
+     * @return \Monolog\LogRecord
      */
-    public function __invoke(array $record): array
+    public function __invoke(LogRecord $record): LogRecord
     {
         if ($this->cachedClientIp !== null) {
-            $record['extra']['client_ip'] = $this->cachedClientIp;
+            $record->extra['client_ip'] = $this->cachedClientIp;
             return $record;
         }
 
@@ -43,7 +44,7 @@ final class ClientIpProcessor
             ? $request->getClientIp() ?? ''
             : '127.0.0.1';
 
-        $record['extra']['client_ip'] = $this->cachedClientIp;
+        $record->extra['client_ip'] = $this->cachedClientIp;
         return $record;
     }
 }

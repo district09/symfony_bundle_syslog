@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Monolog\LogRecord;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
@@ -20,23 +21,23 @@ final readonly class BaseUrlProcessor
     /**
      * Adds the base_url to the record's extra key.
      *
-     * @param array $record
+     * @param \Monolog\LogRecord $record
      *
-     * @return array
+     * @return \Monolog\LogRecord
      */
-    public function __invoke(array $record): array
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['extra']['base_url'] = $this->defaultBaseUrl;
+        $record->extra['base_url'] = $this->defaultBaseUrl;
 
         // Ensure we have a request (maybe we're in a console command).
         $request = $this->requestStack->getCurrentRequest();
         if (!$request) {
             // No current request. Set the referrer to the base url.
-            $record['extra']['referrer'] = $this->defaultBaseUrl;
+            $record->extra['referrer'] = $this->defaultBaseUrl;
             return $record;
         }
 
-        $record['extra']['base_url'] = $request->getSchemeAndHttpHost();
+        $record->extra['base_url'] = $request->getSchemeAndHttpHost();
         return $record;
     }
 }

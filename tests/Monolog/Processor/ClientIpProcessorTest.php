@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor;
+use Monolog\Level;
+use Monolog\LogRecord;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,12 +28,12 @@ final class ClientIpProcessorTest extends TestCase
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
 
-        $id = uniqid('', true);
         $processor = new ClientIpProcessor($requestStack);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals('127.0.0.1', $record['extra']['client_ip']);
-        self::assertEquals($id, $record['id']);
+        self::assertEquals('127.0.0.1', $record->extra['client_ip']);
     }
 
     /**
@@ -51,16 +53,17 @@ final class ClientIpProcessorTest extends TestCase
 
         $id = uniqid('', true);
         $processor = new ClientIpProcessor($requestStack);
-
-        $record = $processor(['id' => $id]);
-        self::assertEquals($id, $record['id']);
-        self::assertEquals($ip, $record['extra']['client_ip']);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
+        self::assertEquals($ip, $record->extra['client_ip']);
 
         // The mocks expect their methods to be called once. Invoking this
         // processor twice should use its cached ip.
-        $record2 = $processor(['id' => $id]);
-        self::assertEquals($id, $record2['id']);
-        self::assertEquals($ip, $record2['extra']['client_ip']);
+        $record2 = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
+        self::assertEquals($ip, $record2->extra['client_ip']);
     }
 
     /**
@@ -75,10 +78,11 @@ final class ClientIpProcessorTest extends TestCase
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
 
-        $id = uniqid('', true);
         $processor = new ClientIpProcessor($requestStack);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        $record = $processor(['id' => $id]);
-        self::assertEquals('', $record['extra']['client_ip']);
+        self::assertEquals('', $record->extra['client_ip']);
     }
 }

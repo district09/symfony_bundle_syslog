@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Monolog\LogRecord;
+
 /**
  * Processor that transforms the level name to lowercase in a log record.
  */
@@ -12,13 +14,13 @@ final class LowerCaseLevelNameProcessor
     /**
      * Transforms the level name to lowercase in the given record.
      *
-     * @param array $record
+     * @param \Monolog\LogRecord $record
      *
-     * @return array
+     * @return \Monolog\LogRecord
      */
-    public function __invoke(array $record)
+    public function __invoke(LogRecord $record): LogRecord
     {
-        $record['level_name'] = strtolower($record['level_name']);
+        $record->extra['level_name'] = strtolower($record->level->getName());
 
         return $record;
     }

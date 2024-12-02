@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\BaseUrlProcessor;
+use Monolog\Level;
+use Monolog\LogRecord;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,12 +28,12 @@ final class BaseUrlProcessorTest extends TestCase
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
 
-        $id = uniqid('', true);
         $processor = new BaseUrlProcessor($requestStack);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals('', $record['extra']['base_url']);
-        self::assertEquals($id, $record['id']);
+        self::assertEquals('', $record->extra['base_url']);
     }
 
     /**
@@ -46,13 +48,13 @@ final class BaseUrlProcessorTest extends TestCase
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn(null);
 
-        $id = uniqid('', true);
         $processor = new BaseUrlProcessor($requestStack, $defaultBaseUrl);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals($defaultBaseUrl, $record['extra']['base_url']);
-        self::assertEquals($defaultBaseUrl, $record['extra']['referrer']);
+        self::assertEquals($defaultBaseUrl, $record->extra['base_url']);
+        self::assertEquals($defaultBaseUrl, $record->extra['referrer']);
     }
 
     /**
@@ -68,12 +70,12 @@ final class BaseUrlProcessorTest extends TestCase
         $requestStack = $this->createMock(RequestStack::class);
         $requestStack->expects($this->once())->method('getCurrentRequest')->willReturn($request);
 
-        $id = uniqid('', true);
         $processor = new BaseUrlProcessor($requestStack, 'https://foo.bar');
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals($url, $record['extra']['base_url']);
-        self::assertFalse(isset($record['extra']['referrer']));
+        self::assertEquals($url, $record->extra['base_url']);
+        self::assertFalse(isset($record->extra['referrer']));
     }
 }

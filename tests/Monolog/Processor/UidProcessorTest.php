@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\UidProcessor;
+use Monolog\Level;
+use Monolog\LogRecord;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -27,12 +29,12 @@ final class UidProcessorTest extends TestCase
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage->expects($this->once())->method('getToken')->willReturn(null);
 
-        $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals(0, $record['extra']['uid']);
+        self::assertEquals('0', $record->extra['uid']);
     }
 
     /**
@@ -49,10 +51,11 @@ final class UidProcessorTest extends TestCase
 
         $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals(0, $record['extra']['uid']);
+        self::assertEquals('0', $record->extra['uid']);
     }
 
     /**
@@ -74,12 +77,12 @@ final class UidProcessorTest extends TestCase
         $tokenStorage = $this->createMock(TokenStorageInterface::class);
         $tokenStorage->expects($this->once())->method('getToken')->willReturn($token);
 
-        $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals('123', $record['extra']['uid']);
+        self::assertEquals('123', $record->extra['uid']);
     }
 
     /**
@@ -103,10 +106,11 @@ final class UidProcessorTest extends TestCase
 
         $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertEquals('456', $record['extra']['uid']);
+        self::assertEquals('456', $record->extra['uid']);
     }
 
     /**
@@ -130,9 +134,10 @@ final class UidProcessorTest extends TestCase
 
         $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
         self::assertEquals('789', $record['extra']['uid']);
     }
 
@@ -156,9 +161,10 @@ final class UidProcessorTest extends TestCase
 
         $id = uniqid('', true);
         $processor = new UidProcessor($tokenStorage);
-        $record = $processor(['id' => $id]);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
         self::assertEquals('foo', $record['extra']['uid']);
     }
 }

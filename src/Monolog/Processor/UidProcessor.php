@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DigipolisGent\SyslogBundle\Monolog\Processor;
 
+use Monolog\LogRecord;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -20,19 +21,19 @@ final readonly class UidProcessor
     /**
      * Adds the uid to the record's extra key.
      *
-     * @param array $record
+     * @param \Monolog\LogRecord $record
      *
-     * @return array
+     * @return \Monolog\LogRecord
      */
-    public function __invoke(array $record): array
+    public function __invoke(LogRecord $record): LogRecord
     {
         $user = $this->tokenStorage->getToken()?->getUser();
         if (!$user) {
-            $record['extra']['uid'] = 0;
+            $record->extra['uid'] = '0';
             return $record;
         }
 
-        $record['extra']['uid'] = $this->getUserIdentifier($user);
+        $record->extra['uid'] = $this->getUserIdentifier($user);
         return $record;
     }
 

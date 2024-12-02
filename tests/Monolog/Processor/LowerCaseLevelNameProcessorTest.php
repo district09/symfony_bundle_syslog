@@ -5,6 +5,8 @@ declare(strict_types = 1);
 namespace DigipolisGent\SyslogBundle\Tests\Monolog\Processor;
 
 use DigipolisGent\SyslogBundle\Monolog\Processor\LowerCaseLevelNameProcessor;
+use Monolog\Level;
+use Monolog\LogRecord;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,12 +23,11 @@ final class LowerCaseLevelNameProcessorTest extends TestCase
      */
     public function itChangesCaseOfLevelNameToLowerCase(): void
     {
-
-        $id = uniqid('', true);
         $processor = new LowerCaseLevelNameProcessor();
-        $record = $processor(['id' => $id, 'level_name' => 'DEBUG']);
+        $record = $processor(
+            new LogRecord(new \DateTimeImmutable(), 'TEST', Level::Debug, 'Foo message')
+        );
 
-        self::assertEquals($id, $record['id']);
-        self::assertSame('debug', $record['level_name']);
+        self::assertSame('debug', $record->extra['level_name']);
     }
 }

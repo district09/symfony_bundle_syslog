@@ -53,14 +53,17 @@ return [
 
 ### Configuration (with or without Symfony Flex)
 
-Add a parameter to `config/services.yaml` to set the identifier for the site.
+Add a parameter to `.env` to set the base URL & identifier for the site.
 This is used to identify logging of different websites.
 
-Replace `site.name` by the actual identifier:
+Replace the base url and identifier with site URL and site name.
 
-```yamp
-# config/services.yaml
+```dotenv
+# .env
 
-parameters:
-    digipolis_syslog_identity: 'site.name'
+###
+# SYSLOG configuration (Kibana).
+###
+DIGIPOLIS_SYSLOG_DEFAULT_BASE_URL=https://domain.ext
+DIGIPOLIS_SYSLOG_IDENTIFIER=sitename
 ```
