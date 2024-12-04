@@ -38,4 +38,5 @@ services:
 
     monolog.formatter.kibana:
         class: Monolog\Formatter\LineFormatter
-        arguments: ["%%extra.base_url%%|%%extra.timestamp%%|symfony|%%extra.level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%"]
+        #arguments: ["%%extra.base_url%%|%%extra.timestamp%%|symfony|%%extra.level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%"]
+        arguments: ["[%%datetime%%] %%channel%%.%%level_name%% %%extra.base_url%%|%%extra.timestamp%%|symfony|%%extra.level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%\n"]
