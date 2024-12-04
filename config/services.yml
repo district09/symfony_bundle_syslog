@@ -1,3 +1,7 @@
+parameters:
+    digipolis_syslog_default_base_url: '%env(DIGIPOLIS_SYSLOG_DEFAULT_BASE_URL)%'
+    digipolis_syslog_identity: '%env(DIGIPOLIS_SYSLOG_IDENTITY)%'
+
 services:
     digipolis_syslog.processor.client_ip:
         class: DigipolisGent\SyslogBundle\Monolog\Processor\ClientIpProcessor
@@ -34,5 +38,5 @@ services:
 
     monolog.formatter.kibana:
         class: Monolog\Formatter\LineFormatter
-        # %base_url%|%timestamp%|%type%|%severity%|%ip%|%request_uri%|%referer%|%uid%|%link%|%message%
-        arguments: ["%%extra.base_url%%|%%timestamp%%|symfony|%%level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%"]
+        #arguments: ["%%extra.base_url%%|%%extra.timestamp%%|symfony|%%extra.level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%"]
+        arguments: ["[%%datetime%%] %%channel%%.%%level_name%% %%extra.base_url%%|%%extra.timestamp%%|symfony|%%extra.level_name%%|%%extra.client_ip%%|%%extra.base_url%%%%extra.url%%|%%extra.referrer%%|%%extra.uid%%|%%extra.base_url%%%%extra.url%%|%%message%%\n"]

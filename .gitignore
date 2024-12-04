@@ -1,4 +1,6 @@
+/build/
 /vendor/
+
 composer.lock
 .phpunit.result.cache
-build/logs/clover.xml
+
